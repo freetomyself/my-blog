@@ -481,3 +481,44 @@ code {
   padding: 0 2px;
   border-radius: 2px;
 }
+
+/* ---------- 搜索筛选按钮 ---------- */
+.search-filters {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin: 16px 0;
+  flex-wrap: wrap;
+}
+
+.filter-label {
+  font-size: 0.9rem;
+  color: var(--secondary);
+}
+
+.filter-buttons {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.filter-btn {
+  padding: 6px 16px;
+  font-size: 0.9rem;
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  background: var(--theme);
+  color: var(--primary);
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.filter-btn:hover {
+  border-color: var(--primary);
+}
+
+.filter-btn.active {
+  background: var(--primary);
+  color: var(--theme);
+  border-color: var(--primary);
+}

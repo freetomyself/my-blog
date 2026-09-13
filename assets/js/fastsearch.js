@@ -1,5 +1,5 @@
 // 增强搜索功能
-// 支持：模糊查询、精确查询（引号）、多条件筛选（分类:/标签:/系列:）
+// 支持：模糊查询、精确查询（引号）、系列筛选按钮、多条件筛选
 
 const resList = document.getElementById('searchResults');
 const sInput = document.getElementById('searchInput');
@@ -10,6 +10,7 @@ let searchIndex = [];
 let currentElement = null;
 let firstResult = null;
 let lastResult = null;
+let activeSeriesFilter = ''; // 当前选中的系列筛选
 
 // Fuse.js 配置
 const fuseOptions = {
@@ -26,7 +27,7 @@ const fuseOptions = {
     ]
 };
 
-// 解析搜索查询
+// 解析搜索查询（支持输入框中的条件语法）
 const parseQuery = (query) => {
     const filters = {
         category: null,
@@ -83,7 +84,7 @@ const applyFilters = (items, filters) => {
             }
         }
         if (filters.series) {
-            const series = Array.isArray(item.series) ? item.series : [item.series];
+            const series = Array.isArray(item.series) ? item.series : (item.series ? [item.series] : []);
             if (!series.some(s => s && s.toLowerCase().includes(filters.series.toLowerCase()))) {
                 return false;
             }
@@ -195,35 +196,82 @@ const performSearch = () => {
     if (!fuse || !searchIndex) return;
 
     const rawQuery = sInput.value.trim();
-    if (!rawQuery) {
+    const hasSeriesFilter = activeSeriesFilter !== '';
+
+    // 如果没有搜索词且没有系列筛选，清空结果
+    if (!rawQuery && !hasSeriesFilter) {
         resList.innerHTML = '';
         return;
     }
 
-    // 解析查询
-    const { keywords, filters } = parseQuery(rawQuery);
-    const hasFilters = filters.category || filters.tag || filters.series || filters.year;
-
     let results = [];
+    let keywords = rawQuery;
 
-    if (hasFilters) {
-        // 有筛选条件时，先过滤再搜索
+    if (hasSeriesFilter) {
+        // 有系列筛选按钮激活
+        const filters = { series: activeSeriesFilter };
+
+        if (rawQuery) {
+            // 有搜索词 + 系列筛选
+            const parsed = parseQuery(rawQuery);
+            keywords = parsed.keywords;
+            // 合并输入框中的其他筛选条件
+            if (parsed.filters.category) filters.category = parsed.filters.category;
+            if (parsed.filters.tag) filters.tag = parsed.filters.tag;
+            if (parsed.filters.year) filters.year = parsed.filters.year;
+            // 输入框的系列筛选覆盖按钮
+            if (parsed.filters.series) filters.series = parsed.filters.series;
+        }
+
         let filtered = applyFilters(searchIndex, filters);
 
         if (keywords) {
-            // 关键词搜索
             const tempFuse = new Fuse(filtered, fuseOptions);
             results = tempFuse.search(keywords);
         } else {
-            // 仅筛选
+            // 仅筛选，无关键词
             results = filtered.map(item => ({ item }));
         }
-    } else if (keywords) {
-        // 纯关键词搜索
-        results = fuse.search(keywords);
+    } else if (rawQuery) {
+        // 仅关键词搜索（支持输入框中的条件语法）
+        const { keywords: kw, filters } = parseQuery(rawQuery);
+        keywords = kw;
+        const hasInputFilters = filters.category || filters.tag || filters.series || filters.year;
+
+        if (hasInputFilters) {
+            let filtered = applyFilters(searchIndex, filters);
+            if (keywords) {
+                const tempFuse = new Fuse(filtered, fuseOptions);
+                results = tempFuse.search(keywords);
+            } else {
+                results = filtered.map(item => ({ item }));
+            }
+        } else {
+            results = fuse.search(keywords);
+        }
     }
 
     renderResults(results, keywords);
+};
+
+// 初始化系列筛选按钮
+const initFilterButtons = () => {
+    const filterBtns = document.querySelectorAll('.filter-btn');
+    if (!filterBtns.length) return;
+
+    filterBtns.forEach(btn => {
+        btn.addEventListener('click', () => {
+            // 更新激活状态
+            filterBtns.forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+
+            // 更新筛选值
+            activeSeriesFilter = btn.dataset.series || '';
+
+            // 重新搜索
+            performSearch();
+        });
+    });
 };
 
 // 初始化搜索
@@ -232,6 +280,9 @@ const initSearch = async () => {
 
     sInput.disabled = false;
     sInput.focus();
+
+    // 初始化筛选按钮
+    initFilterButtons();
 
     try {
         const response = await fetch('../index.json');
@@ -253,7 +304,7 @@ window.addEventListener('load', initSearch);
 sInput?.addEventListener('input', debounce(performSearch, 200));
 
 sInput?.addEventListener('search', () => {
-    if (!sInput.value) reset();
+    if (!sInput.value && !activeSeriesFilter) reset();
 });
 
 document.addEventListener('keydown', (event) => {
