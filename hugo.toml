@@ -1,62 +1,76 @@
+# ============================================
+# Hugo 站点配置
+# ============================================
+
+# 站点基础信息
 baseURL = 'https://freetomyself.github.io/my-blog/'
 locale = 'zh-cn'
 title = '运维笔记'
-hasCJKLanguage = true
+hasCJKLanguage = true  # 启用中文分词（影响搜索和摘要）
 theme = 'PaperMod'
 
-# 构建
-buildDrafts = false
-buildFuture = false
+# 构建选项
+buildDrafts = false    # 不构建草稿
+buildFuture = false    # 不构建未来日期的文章
 
-# 输出 RSS + JSON（搜索索引）
+# 首页输出格式：HTML + RSS + JSON（JSON 用于搜索索引）
 [outputs]
   home = ['html', 'rss', 'json']
 
+# RSS 输出配置
 [outputs.rss]
-  limit = 20
+  limit = 20  # RSS 最多包含 20 篇文章
 
-# 参数
+# ============================================
+# 站点参数
+# ============================================
 [params]
   env = 'production'
   description = '运维工程师的技术笔记与生活随笔'
   author = 'freetomyself'
 
-  # 默认主题：auto 跟随系统
+  # 主题模式：auto 跟随系统，light 亮色，dark 暗色
   defaultTheme = 'auto'
-  ShowReadingTime = true
-  ShowShareButtons = false
-  ShowPostNavLinks = true
-  ShowBreadCrumbs = true
-  ShowCodeCopyButtons = true
-  ShowToc = true
-  TocOpen = false
+
+  # 阅读体验
+  ShowReadingTime = true        # 显示阅读时间
+  ShowTotalReadingTime = true   # 显示总阅读时间
+  ShowShareButtons = false      # 隐藏分享按钮
+  ShowPostNavLinks = true       # 显示上一篇/下一篇
+  ShowBreadCrumbs = true        # 显示面包屑导航
+  ShowCodeCopyButtons = true    # 代码块显示复制按钮
+  ShowToc = true                # 显示文章目录
+  TocOpen = false               # 目录默认折叠
 
   # 首页配置
   ShowRssButtonInSectionTerm = false
   ShowWordCount = false
-  ShowTotalReadingTime = true
 
-  # 评论（Giscus）
+  # 评论系统开关
   comments = true
 
-  # Giscus 配置
+  # Giscus 评论配置（基于 GitHub Discussions）
   [params.giscus]
     repo = "freetomyself/my-blog"
     repoId = "R_kgDOUYySjA"
     category = "Announcements"
     categoryId = "DIC_kwDOUYySjM4DFfvl"
 
+# 首页欢迎语
 [params.homeInfoParams]
   Title = '你好 👋'
   Content = '''
 欢迎来到我的博客。这里记录运维实践、技术笔记和生活随笔。
 '''
 
+# 社交链接
 [[params.socialIcons]]
   name = "github"
   url = "https://github.com/freetomyself"
 
-# 菜单
+# ============================================
+# 导航菜单
+# ============================================
 [menus]
   [[menus.main]]
     identifier = "posts"
@@ -84,31 +98,44 @@ buildFuture = false
     url = "/about/"
     weight = 50
 
-# 标签页
+# ============================================
+# 分类法（标签和分类）
+# ============================================
 [taxonomies]
   tag = 'tags'
   category = 'categories'
 
-# Markdown 配置
+# ============================================
+# Markdown 渲染配置
+# ============================================
 [markup]
+  # 允许 HTML 标签
   [markup.goldmark]
     [markup.goldmark.renderer]
       unsafe = true
+
+  # 代码高亮
   [markup.highlight]
-    codeFences = true
-    guessSyntax = true
-    lineNos = false
-    style = 'monokai'
-    tabWidth = 2
+    codeFences = true      # 启用代码围栏
+    guessSyntax = true     # 自动识别语法
+    lineNos = false        # 不显示行号
+    style = 'monokai'      # 高亮主题
+    tabWidth = 2           # Tab 宽度
+
+  # 文章目录层级
   [markup.tableOfContents]
-    startLevel = 2
-    endLevel = 4
+    startLevel = 2  # 从 h2 开始
+    endLevel = 4    # 到 h4 结束
 
-# 分页
+# ============================================
+# 分页配置
+# ============================================
 [pagination]
-  pagerSize = 10
+  pagerSize = 10  # 每页显示 10 篇文章
 
-# 图片处理
+# ============================================
+# 图片压缩配置
+# ============================================
 [imaging]
   [imaging.jpeg]
     quality = 85

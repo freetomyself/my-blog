@@ -1,41 +1,50 @@
+# Hugo 站点自动部署到 GitHub Pages
 name: Deploy Hugo site to Pages
 
+# 触发条件：推送 main 分支 或 手动触发
 on:
   push:
     branches:
       - main
   workflow_dispatch:
 
+# 权限配置
 permissions:
   contents: read
   pages: write
   id-token: write
 
+# 并发控制：同一时间只运行一个部署任务
 concurrency:
   group: pages
   cancel-in-progress: false
 
 jobs:
+  # 构建阶段
   build:
     runs-on: ubuntu-latest
     env:
       HUGO_VERSION: '0.147.9'
     steps:
+      # 安装 Hugo
       - name: Install Hugo CLI
         run: |
           wget -O ${{ runner.temp }}/hugo.deb https://github.com/gohugoio/hugo/releases/download/v${HUGO_VERSION}/hugo_extended_${HUGO_VERSION}_linux-amd64.deb \
           && sudo dpkg -i ${{ runner.temp }}/hugo.deb
 
+      # 检出代码
       - name: Checkout
         uses: actions/checkout@v4
         with:
           submodules: recursive
           fetch-depth: 0
 
+      # 配置 GitHub Pages
       - name: Setup Pages
         id: pages
         uses: actions/configure-pages@v5
 
+      # 执行 Hugo 构建
       - name: Build with Hugo
         env:
           HUGO_ENVIRONMENT: production
@@ -47,11 +56,13 @@ jobs:
             --destination public \
             --minify
 
+      # 上传构建产物
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
           path: ./public
 
+  # 部署阶段
   deploy:
     environment:
       name: github-pages
@@ -59,6 +70,7 @@ jobs:
     runs-on: ubuntu-latest
     needs: build
     steps:
+      # 部署到 GitHub Pages
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
