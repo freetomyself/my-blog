@@ -1,0 +1,46 @@
+{{- define "main" }}
+
+<header class="page-header">
+    <h1>{{ .Title }}</h1>
+    {{- with .Params.description }}
+    <div class="post-description">{{ . }}</div>
+    {{- end }}
+    {{- with .Params.summary }}
+    <div class="post-description">{{ . }}</div>
+    {{- end }}
+</header>
+
+{{- $pages := .Pages.ByDate }}
+{{- if $pages }}
+<div class="post-list">
+    {{- range $pages }}
+    <article class="post-entry">
+        <header class="entry-header">
+            <h2 class="entry-hint-parent">
+                <a href="{{ .Permalink }}">{{ .Title }}</a>
+            </h2>
+        </header>
+        <div class="entry-content">
+            {{- if .Params.summary }}
+            <p>{{ .Params.summary }}</p>
+            {{- else }}
+            <p>{{ .Plain | truncate 150 }}</p>
+            {{- end }}
+        </div>
+        <footer class="entry-footer">
+            <span title='{{ .Date.Format "2006-01-02" }}'>{{ .Date.Format "2006-01-02" }}</span>
+            {{- if .Lastmod.After .Date }}
+            &nbsp;·&nbsp;<span title='更新于 {{ .Lastmod.Format "2006-01-02" }}'>更新于 {{ .Lastmod.Format "2006-01-02" }}</span>
+            {{- end }}
+            {{- if .ReadingTime }}
+            &nbsp;·&nbsp;<span>{{ .ReadingTime }} min</span>
+            {{- end }}
+        </footer>
+    </article>
+    {{- end }}
+</div>
+{{- else }}
+<p>该系列暂无文章。</p>
+{{- end }}
+
+{{- end }}{{/* end main */ -}}

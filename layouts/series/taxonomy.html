@@ -1,0 +1,41 @@
+{{- define "main" }}
+
+<header class="page-header">
+    <h1>{{ .Title }}</h1>
+    {{- if .Description }}
+    <div class="post-description">
+        {{ .Description }}
+    </div>
+    {{- end }}
+</header>
+
+{{- $series := .Data.Terms.Alphabetical }}
+{{- if $series }}
+<div class="series-list">
+    {{- range $series }}
+    {{- $name := .Name }}
+    {{- $count := .Count }}
+    {{- with site.GetPage (printf "/series/%s" $name) }}
+    <article class="post-entry series-entry">
+        <header class="entry-header">
+            <h2 class="entry-hint-parent">
+                <a href="{{ .Permalink }}">{{ .LinkTitle }}</a>
+            </h2>
+        </header>
+        {{- if .Description }}
+        <div class="entry-content">
+            <p>{{ .Description }}</p>
+        </div>
+        {{- end }}
+        <footer class="entry-footer">
+            <span>共 {{ $count }} 篇文章</span>
+        </footer>
+    </article>
+    {{- end }}
+    {{- end }}
+</div>
+{{- else }}
+<p>暂无系列内容。</p>
+{{- end }}
+
+{{- end }}{{/* end main */ -}}

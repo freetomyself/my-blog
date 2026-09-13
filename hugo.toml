@@ -83,6 +83,11 @@ buildFuture = false    # 不构建未来日期的文章
     url = "/tags/"
     weight = 20
   [[menus.main]]
+    identifier = "series"
+    name = "系列"
+    url = "/series/"
+    weight = 25
+  [[menus.main]]
     identifier = "archives"
     name = "归档"
     url = "/archives/"
@@ -104,11 +109,12 @@ buildFuture = false    # 不构建未来日期的文章
     weight = 50
 
 # ============================================
-# 分类法（标签和分类）
+# 分类法（标签、分类、系列）
 # ============================================
 [taxonomies]
   tag = 'tags'
   category = 'categories'
+  series = 'series'
 
 # ============================================
 # Markdown 渲染配置

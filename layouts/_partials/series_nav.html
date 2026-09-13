@@ -1,0 +1,50 @@
+{{- /* 系列导航：显示当前文章在系列中的位置 */ -}}
+{{- $series := .Params.series }}
+{{- if $series }}
+{{- range $series }}
+{{- $seriesName := . }}
+{{- $seriesPage := site.GetPage (printf "/series/%s" $seriesName) }}
+{{- if $seriesPage }}
+{{- $seriesPages := $seriesPage.Pages.ByDate }}
+{{- $current := $.RelPermalink }}
+{{- $prev := "" }}
+{{- $next := "" }}
+{{- $found := false }}
+{{- range $seriesPages }}
+{{- if eq .RelPermalink $current }}
+{{- $found = true }}
+{{- else if not $found }}
+{{- $prev = . }}
+{{- else if eq $found true }}
+{{- if not $next }}
+{{- $next = . }}
+{{- end }}
+{{- end }}
+{{- end }}
+
+<div class="series-nav">
+    <div class="series-nav-header">
+        <span class="series-label">本系列：</span>
+        <a href="{{ $seriesPage.Permalink }}" class="series-name">{{ $seriesName }}</a>
+        <span class="series-count">({{ len $seriesPages }} 篇)</span>
+    </div>
+    <div class="series-nav-links">
+        {{- if $prev }}
+        <a href="{{ $prev.Permalink }}" class="series-prev" title="{{ $prev.Title }}">
+            ← 上一篇：{{ $prev.Title }}
+        </a>
+        {{- else }}
+        <span class="series-prev disabled">← 已是第一篇</span>
+        {{- end }}
+        {{- if $next }}
+        <a href="{{ $next.Permalink }}" class="series-next" title="{{ $next.Title }}">
+            下一篇：{{ $next.Title }} →
+        </a>
+        {{- else }}
+        <span class="series-next disabled">已是最后一篇 →</span>
+        {{- end }}
+    </div>
+</div>
+{{- end }}
+{{- end }}
+{{- end }}

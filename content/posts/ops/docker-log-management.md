@@ -1,9 +1,12 @@
 ---
 title: "Docker 容器日志管理实践"
 date: 2026-09-10
+lastmod: 2026-09-13
+series: ["Docker"]
 tags: ["Docker", "运维", "日志"]
 categories: ["运维"]
 summary: "生产环境中 Docker 容器日志膨胀问题的排查与解决方案，包括日志驱动配置、轮转策略和监控告警。"
+pin: true
 ---
 
 ## 问题背景

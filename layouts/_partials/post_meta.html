@@ -1,0 +1,35 @@
+{{- $scratch := newScratch }}
+
+{{/* 发布时间 */}}
+{{- if not .Date.IsZero -}}
+    {{- $scratch.Add "meta" (slice (printf "<span title='发布时间 %s'>发布于 %s</span>" (.Date.Format "2006-01-02") (.Date.Format "2006-01-02"))) }}
+{{- end }}
+
+{{/* 更新时间：仅当 lastmod 与 date 不同时显示 */}}
+{{- if not .Lastmod.IsZero -}}
+    {{- if ne (.Lastmod.Format "2006-01-02") (.Date.Format "2006-01-02") -}}
+        {{- $scratch.Add "meta" (slice (printf "<span title='更新时间 %s'>更新于 %s</span>" (.Lastmod.Format "2006-01-02") (.Lastmod.Format "2006-01-02"))) }}
+    {{- end }}
+{{- end }}
+
+{{/* 阅读时间 */}}
+{{- if (.Param "ShowReadingTime") -}}
+    {{- $scratch.Add "meta" (slice (printf "<span>%s</span>" (printf "%d min" .ReadingTime))) }}
+{{- end }}
+
+{{/* 字数统计 */}}
+{{- if (.Param "ShowWordCount") -}}
+    {{- $scratch.Add "meta" (slice (printf "<span>%s</span>" (printf "%d words" .WordCount))) }}
+{{- end }}
+
+{{/* 作者 */}}
+{{- if not (.Param "hideAuthor") -}}
+    {{- with (partial "author.html" .) }}
+        {{- $scratch.Add "meta" (slice (printf "<span>%s</span>" .)) }}
+    {{- end }}
+{{- end }}
+
+{{/* 合并所有 meta 信息 */}}
+{{- with ($scratch.Get "meta") }}
+    {{- delimit . "&nbsp;·&nbsp;" | safeHTML -}}
+{{- end -}}
