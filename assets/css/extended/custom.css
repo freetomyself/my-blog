@@ -522,3 +522,306 @@ code {
   color: var(--theme);
   border-color: var(--primary);
 }
+
+/* ============================================
+   手机端适配
+   ============================================ */
+
+/* ---------- 小屏幕基础调整 ---------- */
+@media (max-width: 768px) {
+  :root {
+    --main-width: 100%;
+    --gap: 16px;
+    --header-height: 56px;
+  }
+
+  body {
+    font-size: 15px;
+    line-height: 1.75;
+  }
+
+  /* 容器宽度 */
+  .main {
+    padding-left: 16px;
+    padding-right: 16px;
+  }
+
+  /* 导航 */
+  .header {
+    padding-top: 8px;
+    padding-bottom: 8px;
+  }
+
+  .nav .main-menu {
+    font-size: 0.9rem;
+    gap: 12px;
+  }
+
+  .nav .main-menu a {
+    font-size: 0.9rem;
+    padding: 4px 0;
+  }
+
+  /* 首页信息 */
+  .home-info {
+    padding: 16px 0;
+  }
+
+  .home-info .entry-header h1 {
+    font-size: 1.5rem;
+  }
+
+  /* 文章列表 */
+  .post-entry {
+    padding: 16px 0;
+  }
+
+  .post-entry .entry-title {
+    font-size: 1.1rem;
+  }
+
+  .post-entry .entry-summary {
+    font-size: 0.9rem;
+    -webkit-line-clamp: 3;
+  }
+
+  .post-entry .entry-footer {
+    font-size: 0.8rem;
+  }
+
+  /* 文章详情页 */
+  .post-single .post-title {
+    font-size: 1.5rem;
+  }
+
+  .post-content {
+    font-size: 15px;
+  }
+
+  .post-content h2 {
+    font-size: 1.25rem;
+  }
+
+  .post-content h3 {
+    font-size: 1.1rem;
+  }
+
+  /* 代码块 */
+  .highlight pre,
+  .chroma {
+    padding: 12px 14px;
+    font-size: 0.85rem;
+    border-radius: 4px;
+    /* 允许横向滚动 */
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  code {
+    font-size: 0.85em;
+    padding: 1px 4px;
+  }
+
+  /* 表格 */
+  .post-content table {
+    display: block;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    font-size: 0.9rem;
+  }
+
+  .post-content th,
+  .post-content td {
+    padding: 8px 10px;
+    white-space: nowrap;
+  }
+
+  /* 引用块 */
+  .post-content blockquote {
+    margin: 1em 0;
+    padding: 10px 14px;
+  }
+
+  /* 系列导航 */
+  .series-nav {
+    padding: 12px 14px;
+  }
+
+  .series-nav-links a,
+  .series-nav-links .disabled {
+    font-size: 0.85rem;
+    padding: 10px 12px;
+  }
+
+  .series-nav-links {
+    flex-direction: column;
+  }
+
+  /* 搜索页 */
+  .searchbox input {
+    font-size: 16px; /* 防止 iOS 自动放大 */
+    padding: 12px 14px;
+  }
+
+  .search-filters {
+    gap: 8px;
+    margin: 12px 0;
+  }
+
+  .filter-label {
+    font-size: 0.85rem;
+  }
+
+  .filter-btn {
+    padding: 6px 12px;
+    font-size: 0.85rem;
+  }
+
+  /* 搜索结果 */
+  #searchResults li {
+    padding: 10px 0;
+  }
+
+  .search-result-title {
+    font-size: 1rem;
+  }
+
+  .search-result-meta,
+  .search-result-summary {
+    font-size: 0.85rem;
+  }
+
+  /* 分页 */
+  .pagination {
+    margin-top: 1.5em;
+    padding-top: 1em;
+  }
+
+  .pagination a,
+  .pagination span {
+    padding: 8px 12px;
+    font-size: 0.85rem;
+  }
+
+  /* 标签云 */
+  .tag-cloud-all .entry-term {
+    padding: 4px 10px;
+    font-size: 0.85rem;
+    margin: 3px;
+  }
+
+  /* TOC */
+  .post-toc {
+    font-size: 0.85rem;
+    padding: 12px;
+  }
+
+  /* 页脚 */
+  .footer {
+    font-size: 0.8rem;
+    padding: 16px;
+  }
+
+  /* 禁止横向溢出 */
+  html {
+    overflow-x: hidden;
+  }
+
+  /* 图片自适应 */
+  .post-content img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 4px;
+  }
+
+  /* 触摸优化 */
+  a,
+  button,
+  .filter-btn {
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  /* 系列列表页 */
+  .series-list .series-entry {
+    padding: 12px 0;
+  }
+}
+
+/* ---------- 更小屏幕（iPhone SE 等） ---------- */
+@media (max-width: 375px) {
+  :root {
+    --gap: 12px;
+  }
+
+  .main {
+    padding-left: 12px;
+    padding-right: 12px;
+  }
+
+  .post-single .post-title {
+    font-size: 1.35rem;
+  }
+
+  .post-entry .entry-title {
+    font-size: 1rem;
+  }
+
+  .nav .main-menu {
+    font-size: 0.85rem;
+    gap: 10px;
+  }
+
+  .highlight pre,
+  .chroma {
+    padding: 10px 12px;
+    font-size: 0.8rem;
+  }
+}
+
+/* ---------- 横屏手机优化 ---------- */
+@media (max-height: 500px) and (orientation: landscape) {
+  .header {
+    position: relative;
+  }
+}
+
+/* ---------- 触摸设备优化 ---------- */
+@media (hover: none) and (pointer: coarse) {
+  /* 链接点击区域增大 */
+  a {
+    padding: 4px 0;
+  }
+
+  /* 按钮触摸区域 */
+  .filter-btn {
+    min-height: 36px;
+  }
+
+  /* 禁用悬停效果（触摸设备） */
+  .post-entry:hover {
+    background: transparent;
+  }
+}
+
+/* ---------- 打印样式 ---------- */
+@media print {
+  .header,
+  .footer,
+  .series-nav,
+  .pagination,
+  .comments,
+  .searchbox {
+    display: none !important;
+  }
+
+  .post-content {
+    font-size: 12pt;
+    line-height: 1.5;
+  }
+
+  .highlight pre,
+  .chroma {
+    border: 1px solid #ccc;
+    page-break-inside: avoid;
+  }
+}
