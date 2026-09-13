@@ -93,6 +93,11 @@ buildFuture = false    # 不构建未来日期的文章
     url = "/search/"
     weight = 40
   [[menus.main]]
+    identifier = "writing"
+    name = "写作指南"
+    url = "/writing/"
+    weight = 45
+  [[menus.main]]
     identifier = "about"
     name = "关于"
     url = "/about/"
