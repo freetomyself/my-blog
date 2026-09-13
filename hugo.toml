@@ -1,3 +1,111 @@
-baseURL = 'https://example.org/'
-locale = 'en-us'
-title = 'My New Hugo Project'
+baseURL = 'https://freetomyself.github.io/my-blog/'
+locale = 'zh-cn'
+title = '运维笔记'
+hasCJKLanguage = true
+theme = 'PaperMod'
+
+# 构建
+buildDrafts = false
+buildFuture = false
+
+# 输出 RSS
+[outputs]
+  home = ['html', 'rss']
+
+[outputs.rss]
+  limit = 20
+
+# 参数
+[params]
+  env = 'production'
+  description = '运维工程师的技术笔记与生活随笔'
+  author = 'freetomyself'
+
+  # 默认主题：auto 跟随系统
+  defaultTheme = 'auto'
+  ShowReadingTime = true
+  ShowShareButtons = false
+  ShowPostNavLinks = true
+  ShowBreadCrumbs = true
+  ShowCodeCopyButtons = true
+  ShowToc = true
+  TocOpen = false
+
+  # 首页配置
+  ShowRssButtonInSectionTerm = false
+  ShowWordCount = false
+  ShowTotalReadingTime = true
+
+  # 评论（Giscus）- 稍后填充
+  # comments = true
+
+[params.homeInfoParams]
+  Title = '你好 👋'
+  Content = '''
+欢迎来到我的博客。这里记录运维实践、技术笔记和生活随笔。
+'''
+
+[[params.socialIcons]]
+  name = "github"
+  url = "https://github.com/freetomyself"
+
+# 菜单
+[menus]
+  [[menus.main]]
+    identifier = "posts"
+    name = "文章"
+    url = "/posts/"
+    weight = 10
+  [[menus.main]]
+    identifier = "tags"
+    name = "标签"
+    url = "/tags/"
+    weight = 20
+  [[menus.main]]
+    identifier = "archives"
+    name = "归档"
+    url = "/archives/"
+    weight = 30
+  [[menus.main]]
+    identifier = "search"
+    name = "搜索"
+    url = "/search/"
+    weight = 40
+  [[menus.main]]
+    identifier = "about"
+    name = "关于"
+    url = "/about/"
+    weight = 50
+
+# 标签页
+[taxonomies]
+  tag = 'tags'
+  category = 'categories'
+
+# Markdown 配置
+[markup]
+  [markup.goldmark]
+    [markup.goldmark.renderer]
+      unsafe = true
+  [markup.highlight]
+    codeFences = true
+    guessSyntax = true
+    lineNos = false
+    style = 'monokai'
+    tabWidth = 2
+  [markup.tableOfContents]
+    startLevel = 2
+    endLevel = 4
+
+# 分页
+[pagination]
+  pagerSize = 10
+
+# 图片处理
+[imaging]
+  [imaging.jpeg]
+    quality = 85
+  [imaging.webp]
+    quality = 85
+  [imaging.avif]
+    quality = 85
