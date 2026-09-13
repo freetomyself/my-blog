@@ -1,0 +1,25 @@
+{{- if and .IsPage (not .Draft) .Params.comments }}
+<!-- Giscus 评论系统 -->
+{{- $repo := site.Params.giscus.repo }}
+{{- $repoId := site.Params.giscus.repoId }}
+{{- $category := site.Params.giscus.category }}
+{{- $categoryId := site.Params.giscus.categoryId }}
+{{- if and $repo $repoId $categoryId }}
+<script src="https://giscus.app/client.js"
+        data-repo="{{ $repo }}"
+        data-repo-id="{{ $repoId }}"
+        data-category="{{ $category }}"
+        data-category-id="{{ $categoryId }}"
+        data-mapping="pathname"
+        data-strict="0"
+        data-reactions-enabled="1"
+        data-emit-metadata="0"
+        data-input-position="bottom"
+        data-theme="preferred_color_scheme"
+        data-lang="zh-CN"
+        data-loading="lazy"
+        crossorigin="anonymous"
+        async>
+</script>
+{{- end }}
+{{- end }}
