@@ -3,7 +3,7 @@
 # ============================================
 
 # 站点基础信息
-baseURL = 'https://freetomyself.github.io/my-blog/'
+baseURL = 'https://whdblog.dpdns.org/'
 locale = 'zh-cn'
 title = '运维笔记'
 hasCJKLanguage = true  # 启用中文分词（影响搜索和摘要）
