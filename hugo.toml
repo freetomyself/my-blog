@@ -39,12 +39,12 @@ buildFuture = false
   # 评论（Giscus）
   comments = true
 
-  # Giscus 配置 - 待填充
+  # Giscus 配置
   [params.giscus]
     repo = "freetomyself/my-blog"
-    repoId = ""        # 从 giscus.app 获取
+    repoId = "R_kgDOUYySjA"
     category = "Announcements"
-    categoryId = ""    # 从 giscus.app 获取
+    categoryId = "DIC_kwDOUYySjM4DFfvl"
 
 [params.homeInfoParams]
   Title = '你好 👋'
